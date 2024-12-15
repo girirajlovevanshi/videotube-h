@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar : {
         type : String, // url
-        required : true
+        //required : true
     },
     coverImage :{
         type : String
@@ -55,11 +55,11 @@ userSchema.pre("save", async function (next){
     next();
 });
 
-userSchema.methods.isPasswordMatched( async function  (password) {
+userSchema.methods.isPasswordCorrect = async function  (password) {
     return await bcrypt.compare(password, this.password)
-});
+};
 
-userSchema.methods.genrateAccessToken( function(){
+userSchema.methods.genrateAccessToken = function(){
     return jwt.sign(
         {
             _id:this._id,
@@ -72,9 +72,9 @@ userSchema.methods.genrateAccessToken( function(){
             expiresIn:process.env.ACCESS_TOKEN_EXPIRY
         }
     )
-})
+}
 
-userSchema.methods.genrateRefreshToken( function(){
+userSchema.methods.genrateRefreshToken = function(){
     return jwt.sign(
         {
             _id:this._id,
@@ -84,6 +84,6 @@ userSchema.methods.genrateRefreshToken( function(){
             expiresIn:process.env.REFRESH_TOKEN_EXPIRY
         }
     )
-})
+}
 
 export const User = mongoose.model("User", userSchema)
