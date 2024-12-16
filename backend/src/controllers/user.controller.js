@@ -2,6 +2,7 @@ import {asyncHandler} from '../utils/asyncHandler.js'
 import { ApiError } from '../utils/ApiError.js';
 import { User } from '../models/user.model.js'
 import {uploadOnCloudinary} from '../utils/cloudinary.js'
+//import {uploadOnSpaces} from '../utils/spaceDigitalOcean.js'
 import ApiResponse from '../utils/ApiResponse.js';
 
 const registerUser = asyncHandler( async (req,res)=>{
@@ -37,7 +38,9 @@ const registerUser = asyncHandler( async (req,res)=>{
         throw new ApiError(400,"Avatar file is required | Missing path");
     } 
 
-    const avatar = await uploadOnCloudinary(avatarLocalPath)
+    const avatar = await uploadOnCloudinary(avatarLocalPath) //for cloudinary
+    //const spaceAwatar = await uploadOnSpaces(avatarLocalPath) //for spacess
+    
     
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
 
