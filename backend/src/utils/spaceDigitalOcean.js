@@ -22,7 +22,9 @@ const uploadOnSpaces = async (localFilePath) => {
             Bucket: process.env.SPACES_BUCKET, // Ensure this is set in your .env file
             Key: fileName, // Path to the file in the Spaces bucket
             Body: fileContent,
-            ACL: 'public-read' // Make file publicly accessible (change as needed)
+            ACL: 'public-read', // Make file publicly accessible (change as needed)
+            ContentType: 'image/jpeg', // Set appropriate MIME type
+            ContentDisposition: 'inline', // Ensure inline preview
         };
         
         const response = await s3.upload(params).promise();
